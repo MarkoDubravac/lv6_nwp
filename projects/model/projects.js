@@ -1,0 +1,14 @@
+var mongoose = require("mongoose");
+var projectSchema = new mongoose.Schema({
+  name: String,
+  description: String,
+  price: Number,
+  finished_jobs: [
+    {
+      job_name: String,
+    },
+  ],
+  start_date: { type: Date, default: Date.now },
+  end_date: { type: Date, default: Date.now },
+});
+mongoose.model("Project", projectSchema);
