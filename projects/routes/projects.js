@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
       end_date,
     });
     await project.save();
-    res.redirect("back");
+    res.redirect("/");
   } catch (error) {
     res
       .status(400)
