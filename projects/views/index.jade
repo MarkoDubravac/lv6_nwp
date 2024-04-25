@@ -8,14 +8,15 @@ block content
   ul.projects-list
     each project in projects
       li.card
-        div.project-header
-          h2= project.name + " - " + project.price + " €"
-          form(action=`/projects/${project._id}`, method='POST')
-            button.delete-project(type='submit') Delete
-        p= project.description
-        p Duration: #{project.start_date_formatted} - #{project.end_date_formatted}
-        p Finished jobs:
-        ul.finished-jobs
-          each job in project.finished_jobs
-            li= job.job_name
-        
+        a(href=`/projects/${project._id}`)
+          div.project-header
+            h2= project.name + " - " + project.price + " €"
+            form(action=`/projects/${project._id}`, method='POST')
+              button.delete-project(type='submit') Delete
+          div.project-content
+            p= project.description
+            p Duration: #{project.start_date_formatted} - #{project.end_date_formatted}
+            p Finished jobs:
+            ul.finished-jobs
+              each job in project.finished_jobs
+                li= job.job_name
