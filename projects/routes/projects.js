@@ -100,4 +100,26 @@ router.post("/:id/edit", async (req, res) => {
   }
 });
 
+router.post("/:id/add-member", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email } = req.body;
+
+    const project = await Project.findById(id);
+    if (!project) {
+      return res.status(404).send("Project not found");
+    }
+
+    project.team_members.push({ name, email });
+    await project.save();
+
+    res.redirect(`/projects/${id}`);
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to add team member to project",
+      error: error.message,
+    });
+  }
+});
+
 module.exports = router;

@@ -3,7 +3,7 @@ extends layout
 block content
   div.project-details
     h1 Edit Project: #{project.name}
-    form(action="/projects/" + project._id + "/edit", method="POST")
+    form(action='/projects/' + project._id + '/edit', method="POST")
       .form-group
         label.form-label(for="name") Name:
         input.form-input(type="text", id="name", name="name", value=project.name)
@@ -25,6 +25,26 @@ block content
       .form-group
         label.form-label(for="end_date") End Date:
         input.form-input(type="date", id="end_date", name="end_date", value=project.end_date_formatted)
-      div
       .form-group
         input.form-submit(type="submit", value="Save")
+        br
+
+    form(action='/projects/' + project._id + '/add-member', method="POST")
+      .form-group
+        label.form-label(for="memberName") Member Name:
+        input.form-input(type="text", id="memberName", name="name", placeholder="Name")
+
+      .form-group
+        label.form-label(for="memberEmail") Member Email:
+        input.form-input(type="email", id="memberEmail", name="email", placeholder="Email")
+
+      input.form-submit(type="submit", value="Add Team Member")
+
+      h2 Team Members:
+      ul
+        each member in project.team_members
+          if member && member.name
+            li= member.name + ' - ' + (member.email ? member.email : 'Email not provided')
+          else
+            li Member data is missing or incomplete
+
