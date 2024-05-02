@@ -29,5 +29,19 @@ block content
               each job in project.finished_jobs
                 li= job.job_name
   hr
-  h1 Projects that you work on
-  p=loggedInUser
+  h2 Projects that you manage
+    ul.projects-list
+      each project in projects
+        if project.manager == userId
+          li 
+            h2= project.name
+          
+  hr
+  h2 Projects that you work on
+    ul.projects-list
+      each project in projects
+        if userId
+          if project.team_members.some(member => member.toString() === userId.toString())
+            li 
+              h2= project.name
+  hr

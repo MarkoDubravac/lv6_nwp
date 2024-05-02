@@ -12,11 +12,12 @@ router.get("/", async (req, res) => {
       project.end_date_formatted = formatDate(project.end_date);
     });
     var isAuth = req.query.auth;
+    const userId = req.query.userId;
     if (!isAuth) {
       isAuth = false;
     }
     console.log(isAuth);
-    res.render("index", { projects, isAuth });
+    res.render("index", { projects, isAuth, userId });
   } catch (error) {
     res
       .status(500)

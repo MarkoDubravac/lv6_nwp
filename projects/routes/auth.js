@@ -54,7 +54,7 @@ router.post("/register", async (req, res) => {
     });
 
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.redirect("/?auth=" + true + "&user=" + user.userName);
+    res.redirect("/?auth=" + true + "&userId=" + user._id);
   } catch (error) {
     res
       .status(500)
@@ -81,7 +81,7 @@ router.post("/login", async (req, res) => {
     });
 
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.redirect("/?auth=" + true);
+    res.redirect("/?auth=" + true + "&userId=" + user._id);
   } catch (error) {
     res
       .status(500)
