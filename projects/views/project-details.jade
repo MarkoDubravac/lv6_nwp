@@ -7,6 +7,15 @@ block content
       .form-group
         label.form-label(for="name") Name:
         input.form-input(type="text", id="name", name="name", value=project.name)
+      form(action='/projects/' + project._id + '/update-archive-status', method="POST")
+        .form-group
+          input.form-inpu(type="radio", name="archived", value="false", checked=project.archived === false, onchange="handleRadioChange(this)")
+          | Active
+          input.form-inpu(type="radio", name="archived", value="true", checked=project.archived === true, onchange="handleRadioChange(this)")
+          | Archived
+        input.form-submit(type="submit", value="Update Status")
+      br
+      br
       .form-group
         label.form-label(for="description") Description:
         textarea.form-input.form-textarea(name="description", id="description")= project.description
@@ -31,20 +40,23 @@ block content
 
     form(action='/projects/' + project._id + '/add-member', method="POST")
       .form-group
-        label.form-label(for="memberName") Member Name:
-        input.form-input(type="text", id="memberName", name="name", placeholder="Name")
-
-      .form-group
-        label.form-label(for="memberEmail") Member Email:
-        input.form-input(type="email", id="memberEmail", name="email", placeholder="Email")
+        label.form-label(for="memberSelect") Select Member:
+        select.form-option-select(id="memberSelect" name="userName")
+          each user in users
+            if !project.team_members.includes(user)
+              option(value=user.userName)= user.userName
 
       input.form-submit(type="submit", value="Add Team Member")
+      br
 
       h2 Team Members:
-      ul
-        each member in project.team_members
-          if member && member.name
-            li= member.name + ' - ' + (member.email ? member.email : 'Email not provided')
-          else
-            li Member data is missing or incomplete
-
+        ul
+          each member in project.team_members
+            if member && member.userName
+              li
+                label
+                  input(type="checkbox", name="manager", value=member._id, onchange="handleCheckboxChange(this)", checked=project.manager.toString() === member._id.toString())
+                  | #{member.userName}
+    form(action='/projects/' + project._id + '/add-manager', method="POST")
+      input(type="hidden", name="manager", id="managerInput")
+      input.form-submit(type="submit", value="Add Manager")

@@ -18,6 +18,10 @@ a {
   align-items: center;
 }
 
+.pd-3 {
+  padding: 3%;
+}
+
 .delete-project {
   background-color: #ff4d4d;
   color: white;
@@ -109,4 +113,18 @@ a {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.form-option-select {
+  appearance: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  width: 100%;
+}
+
+.form-option-select option {
+  padding: 8px 16px;
 }

@@ -10,6 +10,8 @@ var projectSchema = new mongoose.Schema({
   ],
   start_date: { type: Date, default: Date.now },
   end_date: { type: Date, default: Date.now },
-  team_members: [{ name: String, email: String }],
+  team_members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  manager: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  isArchived: { type: Boolean, default: false },
 });
 mongoose.model("Project", projectSchema);

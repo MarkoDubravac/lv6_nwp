@@ -2,9 +2,17 @@ extends layout
 
 block content
   div.project-header
-    h1 List of Projects
-    form(action='/projects/new', method='GET') 
-      button.add-project(type='submit') Add New Project 
+    div
+      h1 List of Projects
+    div.project-header
+      form(action='/projects/new', method='GET', style='padding-right: 10px;') 
+        button.add-project(type='submit') Add New Project
+      if isAuth
+        form(action='/auth/logout', method='GET') 
+          button.add-project(type='submit') Logout
+      else
+        form(action='/auth/login', method='GET')  
+          button.add-project(type='submit') Login
   ul.projects-list
     each project in projects
       li.card
@@ -20,3 +28,6 @@ block content
             ul.finished-jobs
               each job in project.finished_jobs
                 li= job.job_name
+  hr
+  h1 Projects that you work on
+  p=loggedInUser

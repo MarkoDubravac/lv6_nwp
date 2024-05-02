@@ -6,12 +6,17 @@ const Project = mongoose.model("Project");
 
 router.get("/", async (req, res) => {
   try {
-    const projects = await Project.find().lean(); // Use lean() to ensure plain JavaScript objects
+    const projects = await Project.find().lean();
     projects.forEach((project) => {
       project.start_date_formatted = formatDate(project.start_date);
       project.end_date_formatted = formatDate(project.end_date);
     });
-    res.render("index", { projects });
+    var isAuth = req.query.auth;
+    if (!isAuth) {
+      isAuth = false;
+    }
+    console.log(isAuth);
+    res.render("index", { projects, isAuth });
   } catch (error) {
     res
       .status(500)
